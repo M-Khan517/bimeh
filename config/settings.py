@@ -114,7 +114,7 @@ DATABASES = {
     # }
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": BASE_DIR / "db.postgresql",
+        "NAME": "bimeh_db",
         "USER":"root",
         "PASSWORD":"32769272",
     }
