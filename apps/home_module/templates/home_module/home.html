@@ -1,0 +1,103 @@
+{% extends layout_path %}
+
+{% load i18n %}
+
+{% block title %}داشبورد{% endblock title %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock page_css %}
+
+{% block content %}
+
+<div class="container section-box m-3">
+  <div class="row d-flex justify-content-between">
+
+    <div class="col-md-6 mt-4 mt-md-0">
+      <h5 class="fw-bold">آخرین زیرمجموعه‌های اضافه‌شده</h5>
+      <table class='table'>
+      {% for sub in subs %}
+    <tr class='mb-1'>
+        <td>{{forloop.counter}}</td>
+        <td>{{sub.full_name}}</td>
+        <td>{{sub.national_code}}</td>
+    </tr>
+
+      {% endfor %}
+      </table>
+      
+      <p class="mb-1">تعداد زیرمجموعه‌های شما: <strong>{% if sub_count %} {{sub_count}} {% else %}0 {% endif %} عدد</strong></p>
+
+      <a href='{% url "sub_users" %}' class="btn btn-primary px-4">حذف، اضافه یا ویرایش زیرمجموعه</a>
+    </div>
+
+    <div class="col-md-6">
+      <div class="chart-wrapper">
+        <canvas id="paymentChart" width="220" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 220px;"></canvas>
+        <div class="chart-center-text text-info">{{paid}}</div>
+      </div>
+      <p class="mt-3 mb-1">مجموع مبالغ حق بیمه‌های پرداختی</p>
+      <p class="mb-1">شما <strong>{% if insurance_count %}{{insurance_count}} {% else %} 0 {% endif %}</strong> بیمه‌نامه در دفعات متعدد برای همراهان خود صادر کرده‌اید.</p>
+      <br>
+      <div class="text-center"><a href='{% url "insurances" %}' class="btn-green">خرید بیمه‌نامه زائرین</a></div>
+      
+    </div>
+
+  </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+    <script>
+                        Swal.fire({title: "{{message}}",icon: "success",draggable: false,})
+                         
+                        </script>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% block page_js %}
+<script>
+  const ctx = document.getElementById('paymentChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['پرداخت‌شده', 'باقی‌مانده'],
+      datasets: [{
+        data: [{{total}}, {{total_paid}}],
+        backgroundColor: ['#28a745', '#e0e0e0'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      cutout: '75%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      }
+    }
+  });
+</script>{% endblock page_js %}
+<script>
+  const ctx = document.getElementById('paymentChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['پرداخت‌شده', 'باقی‌مانده'],
+      datasets: [{
+        data: [120, 80],
+        backgroundColor: ['#28a745', '#e0e0e0'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      cutout: '75%',
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      }
+    }
+  });
+</script>

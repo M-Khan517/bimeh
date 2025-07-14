@@ -1,0 +1,11 @@
+{
+  "menu": [
+    {
+      "url": "index",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "name": "صفحه 1",
+      "slug": "index"
+    },
+    
+  ]
+}

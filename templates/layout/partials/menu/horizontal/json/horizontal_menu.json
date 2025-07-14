@@ -1,0 +1,40 @@
+{
+  "menu": [
+    {
+      "url": "home",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "name": "خانه",
+      "slug": "index"
+    },
+    {
+      "url": "insurances",
+      "icon": "menu-icon tf-icons ti ti-book",
+      "name": "لیست و ثبت بیمه نامه",
+      "slug": "index"
+    },
+    {
+      "url": "sub_users",
+      "icon": "menu-icon tf-icons ti ti-user",
+      "name": "لیست زائران",
+      "slug": "index"
+    },
+    {
+      "url": "status",
+      "icon": "menu-icon tf-icons ti ti-layout-kanban",
+      "name": "گردش کار",
+      "slug": "status"
+    },
+    {
+      "url":"update_user",
+      "icon":"ti ti-settings me-2 ti-sm",
+      "name":"ویرایش مشخصات",
+      "slug":"index"
+    },
+    {
+      "url":"logout",
+      "icon":"ti ti-logout me-2 ti-sm",
+      "name":"خروج",
+      "slug":"index"
+    }
+  ]
+}

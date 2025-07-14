@@ -1,0 +1,27 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container text-center border">
+    <div class="image">
+        {% if status == True %}
+        <img src="{% static 'img/icons/payments/success.png' %}" alt="status-icon">
+        {% else %}
+        <img src="{% static 'img/icons/payments/danger.png' %}" alt="status-icon">
+        {% endif %}
+        
+    </div>
+    <p class="alert alert-{% if status == True %}success{% else %}danger{% endif %}" >
+        {% if status == True %}
+        پرداخت با موفقیت انجام شد کد رهگیری : {{refId}}
+        {% else %}
+        پرداخت با خطا مواجه شد
+        {% endif %}
+    </p>
+    <hr>
+    <br>
+    <a href="btn btn-link" href="{% url 'insurances' %}">بازگشت</a>
+    <br><br>
+</div>
+
+{% endblock %}

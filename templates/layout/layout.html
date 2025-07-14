@@ -1,0 +1,564 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html class="light-style layout-navbar-fixed layout-wide" data-assets-path="{% static '' %}" data-template="front-pages" data-theme="theme-default" dir="rtl" lang="fa">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" name="viewport"/>
+    <title>{% block page_title %}خانه{% endblock page_title %} | {% if request.session.setting.name == None %}بیمه زائر{% else %}{{request.session.setting.name}}{% endif %}</title>
+    <meta content="" name="description"/>
+    <!-- Favicon -->
+    <link 
+    href="{% if request.session.setting.logo == None %}
+    {% static 'img/favicon/favicon.ico' %}
+    {% else %}
+    {{request.session.setting.logo}}
+    {% endif %}
+    " rel="icon" type="image/x-icon"/>
+    <link href="{% static 'vendor/fonts/tabler-icons.css' %}" rel="stylesheet"/>
+    <!-- Core CSS -->
+    <link type="css" rel="stylesheet" class="template-customizer-core-css" href="{% static 'vendor/css/rtl/core.css' %}"/>
+    <link class="template-customizer-theme-css" href="{% static 'vendor/css/rtl/theme-default.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/demo.css' %}" rel="stylesheet"/>
+    <link href="{% static 'vendor/css/pages/front-page.css' %}" rel="stylesheet"/>
+    <!-- Vendors CSS -->
+    <link href="{% static 'vendor/libs/node-waves/node-waves.css' %}" rel="stylesheet"/>
+    <link href="{% static 'vendor/libs/nouislider/nouislider.css' %}" rel="stylesheet"/>
+    <link href="{% static 'vendor/libs/swiper/swiper.css' %}" rel="stylesheet"/>
+    <!-- Page CSS -->
+    <link href="{% static 'vendor/css/pages/front-page-landing.css' %}" rel="stylesheet"/>
+    <!-- Helpers -->
+    
+    <script src="{% static 'vendor/js/helpers.js' %}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  -->
+    <script src="{% static 'vendor/js/template-customizer.js' %}"></script>
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{% static 'js/front-config.js' %}"></script>
+    <!-- Better experience of RTL -->
+    <link href="{% static 'css/rtl.css' %}" rel="stylesheet"/>
+
+    <style>
+
+        /*
+* demo.css
+* File include item demo only specific css only
+******************************************************************************/
+
+.light-style .menu .app-brand.demo {
+  height: 64px;
+}
+
+.dark-style .menu .app-brand.demo {
+  height: 64px;
+}
+
+.app-brand-logo.demo {
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  display: -ms-flexbox;
+  display: flex;
+  width: 34px;
+  height: 24px;
+}
+
+.app-brand-logo.demo svg {
+  width: 35px;
+  height: 24px;
+}
+
+.app-brand-text.demo {
+  font-size: 1.375rem;
+}
+
+/* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
+.layout-navbar-fixed .layout-wrapper:not(.layout-without-menu) .layout-page {
+  padding-top: 64px !important;
+}
+.layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
+  padding-top: 78px !important;
+}
+/* Navbar page z-index issue solution */
+.content-wrapper .navbar {
+  z-index: auto;
+}
+
+/*
+* Content
+******************************************************************************/
+
+.demo-blocks > * {
+  display: block !important;
+}
+
+.demo-inline-spacing > * {
+  margin: 1rem 0.375rem 0 0 !important;
+}
+
+/* ? .demo-vertical-spacing class is used to have vertical margins between elements. To remove margin-top from the first-child, use .demo-only-element class with .demo-vertical-spacing class. For example, we have used this class in forms-input-groups.html file. */
+.demo-vertical-spacing > * {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-lg > * {
+  margin-top: 1.875rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing-lg.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-xl > * {
+  margin-top: 5rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing-xl.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.rtl-only {
+  display: none !important;
+  text-align: left !important;
+  direction: ltr !important;
+}
+
+[dir='rtl'] .rtl-only {
+  display: block !important;
+}
+
+/* Dropdown buttons going out of small screens */
+@media (max-width: 576px) {
+  #dropdown-variation-demo .btn-group .text-truncate {
+    width: 254px;
+    position: relative;
+  }
+  #dropdown-variation-demo .btn-group .text-truncate::after {
+    position: absolute;
+    top: 45%;
+    right: 0.65rem;
+  }
+}
+
+/*
+* Layout demo
+******************************************************************************/
+
+.layout-demo-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.layout-demo-placeholder img {
+  width: 900px;
+}
+.layout-demo-info {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+
+
+      .timeline {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        position: relative;
+        margin: 50px 0;
+      }
+
+      .timeline-step {
+        text-align: center;
+        position: relative;
+        flex: 1 1 18%;
+        margin-bottom: 40px;
+      }
+
+      .timeline-step::before {
+        content: '';
+        position: absolute;
+        top: 30px;
+        right: 50%;
+        transform: translateX(50%);
+        width: 20px;
+        height: 20px;
+        background-color: #0d6efd;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
+      .timeline-step::after {
+        content: '';
+        position: absolute;
+        top: 39px;
+        right: -50%;
+        height: 2px;
+        width: 100%;
+        background-color: #0d6efd;
+        z-index: 0;
+      }
+
+      .timeline-step:last-child::after {
+        content: none;
+      }
+
+      .step-title {
+        margin-top: 60px;
+        font-weight: bold;
+        font-size: 1rem;
+      }
+
+      /* ریسپانسیو برای موبایل */
+      @media (max-width: 768px) {
+        .timeline {
+          flex-direction: column;
+          border-right: 2px dashed #0d6efd;
+        }
+
+        .timeline-step {
+          flex: 1 1 100%;
+          margin-right: 1rem;
+          padding-right: 1rem;
+        }
+
+        .timeline-step::before {
+          top: 0;
+          right: -30px;
+          transform: none;
+        }
+
+        .timeline-step::after {
+          display: none;
+        }
+
+        .step-title {
+          margin-top: 20px;
+        }
+      }
+
+
+        .roadmap-step {
+      text-align: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    .roadmap-step::after {
+      content: "";
+      position: absolute;
+      top: 40px;
+      right: -50%;
+      width: 100%;
+      height: 3px;
+      background-color: #0d6efd;
+      z-index: 0;
+    }
+
+    .roadmap-step:last-child::after {
+      display: none;
+    }
+
+    .step-icon {
+      font-size: 2rem;
+      background-color: #0d6efd;
+      color: white;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      z-index: 1;
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
+      .roadmap-step {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+
+      .roadmap-step::after {
+        top: auto;
+        right: 50%;
+        width: 3px;
+        height: 50px;
+      }
+    }
+    .img-title{
+      color: black;
+    }
+    </style>
+
+</head>
+
+<body>
+<script src="{% static 'vendor/js/dropdown-hover.js' %}"></script>
+<script src="{% static 'vendor/js/mega-dropdown.js' %}"></script>
+<!-- Navbar: Start -->
+<nav class="layout-navbar shadow-none py-0">
+    <div class="container">
+        <div class="navbar navbar-expand-lg landing-navbar px-3 px-md-4">
+            <!-- Menu logo wrapper: Start -->
+            <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4">
+                <!-- Mobile menu toggle: Start-->
+                <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید" class="navbar-toggler border-0 px-0 me-2" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+                    <i class="ti ti-menu-2 ti-sm align-middle"></i>
+                </button>
+                <!-- Mobile menu toggle: End-->
+                <a class="app-brand-link" href="{% url "index" %}">
+                    {% if request.session.setting.logo == None %}
+                    <span class="app-brand-logo demo">
+                        <svg fill="none" height="22" viewBox="0 0 32 22" width="32" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="#7367F0" fill-rule="evenodd"/>
+                            <path clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" fill-rule="evenodd" opacity="0.06"/>
+                            <path clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" fill-rule="evenodd" opacity="0.06"/>
+                            <path clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0" fill-rule="evenodd"/>
+                        </svg>
+                    </span>
+                    {% else %}
+                    <img height="22" width="32" src="{{request.session.setting.logo}}" alt="logo">
+                    {% endif %}
+                    <span class="app-brand-text demo menu-text fw-bold ms-2 ps-1">
+                        {% if request.session.setting.name == None %}بیمه زائر {% else %}{{request.session.setting.name}}{% endif %}
+                    </span>
+                </a>
+            </div>
+            <!-- Menu logo wrapper: End -->
+            <!-- Menu wrapper: Start -->
+            <div class="collapse navbar-collapse landing-nav-menu" id="navbarSupportedContent">
+                <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید" class="navbar-toggler border-0 text-heading position-absolute end-0 top-0 scaleX-n1-rtl" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+                    <i class="ti ti-x ti-sm"></i>
+                </button>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link fw-medium" href="{% url "index" %}">صفحه اصلی</a>
+                    </li>
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link fw-medium" href="{% url "about_us" %}">درباره ما</a>
+                    </li>
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link fw-medium" href="{% url "contact_us" %}">تماس با ما</a>
+                    </li>
+                    <li class="nav-item">
+                        <a aria-current="page" class="nav-link fw-medium" href="{% url "faq" %}">سوالات پرتکرار</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+<li class="nav-item">
+                        <a aria-current="page" class="nav-link fw-medium" href="{% url "home" %}">ورود به پنل مدیریت</a>
+                    </li>
+                  {% endif %}
+                </ul>
+            </div>
+            <div class="landing-menu-overlay d-lg-none"></div>
+            <!-- Menu wrapper: End -->
+            <!-- Toolbar: Start -->
+            <ul class="navbar-nav flex-row align-items-center ms-auto">
+                
+                <!-- navbar button: Start -->
+                {% if request.user.is_authenticated %}
+<li>
+                        <a class="btn btn-primary" href="{% url 'logout' %}" target="_blank">
+                        <span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span>
+                        <span class="d-none d-md-block">خروج</span>
+                    </a>
+                    </li>
+                {% else %}
+                <li>
+                    <b>
+                        <span>خرید بیمه زائرین</span>
+                        <span class='tf-icons ti ti-arrow-left'></span>        
+                    </b>
+                </li>
+                    <li>
+                      <div class='btn btn-primary'>
+                    <a class='text-white m-1' href="{% url 'register' %}">
+                        <span class="tf-icons ti ti-pencil scaleX-n1-rtl me-md-1"></span>
+                        <span class="d-none d-md-block">ثبت نام</span>
+                    </a>
+                    /
+                    <a class='text-white m-1' href="{% url 'login' %}">
+                        <span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span>
+                        <span class="d-none d-md-block">ورود</span>
+                    </a>
+                    </div>
+                </li>
+
+                                
+                
+                {% endif %}
+                    
+                <!-- Style Switcher -->
+                <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
+                    <a class="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown" href="javascript:void(0);">
+                        <i class="ti ti-md"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+                        <li>
+                            <a class="dropdown-item" data-theme="light" href="javascript:void(0);">
+                                <span class="align-middle">
+                                    <i class="ti ti-sun me-2"></i>
+                                    روز
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-theme="dark" href="javascript:void(0);">
+                                <span class="align-middle">
+                                    <i class="ti ti-moon me-2"></i>
+                                    شب
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-theme="system" href="javascript:void(0);">
+                                <span class="align-middle">
+                                    <i class="ti ti-device-desktop me-2"></i>
+                                    سیستم
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- / Style Switcher-->
+
+                <!-- navbar button: End -->
+            </ul>
+            <!-- Toolbar: End -->
+        </div>
+    </div>
+</nav>
+<!-- Navbar: End -->
+
+<br><br>
+<br><br>
+
+{% block content %}
+
+{% endblock content %}
+
+
+<!-- Footer: Start -->
+<footer class="landing-footer bg-body footer-text">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row gx-0 gy-4 g-md-5">
+                <div class="col-lg-5">
+                    <a class="app-brand-link mb-4" href="{% url "index" %}">
+                        <span class="app-brand-logo demo">
+                            {% if request.session.setting.logo != None %}
+                        <img height="22" width="32" src="{{request.session.setting.logo}}" alt="logo">
+                        {% else %}
+                        <svg fill="none" height="22" viewBox="0 0 32 22" width="32" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="#7367F0" fill-rule="evenodd"/>
+                            <path clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" fill-rule="evenodd" opacity="0.06"/>
+                            <path clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" fill-rule="evenodd" opacity="0.06"/>
+                            <path clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0" fill-rule="evenodd"/>
+                        </svg>
+                        {% endif %}
+                        </span>
+                        {% if request.session.setting.name != None %}
+                        <span class="app-brand-text demo footer-link fw-bold ms-2 ps-1">{{request.session.setting.name}}</span>
+                        {% else %}
+                        <span class="app-brand-text demo footer-link fw-bold ms-2 ps-1">بیمه زائر</span>
+                        {% endif %}
+                    </a>
+{% if request.session.about.about_us %}
+<p>{{request.session.about.about_us}}</p>
+{% endif %}
+<p>مجموعه بیمه زائر به لطف کرامت حضرت رضا (ع) از سال ۹۴ تا کنون بر مدیریت و مجموعه بیمه زائر امتداد داشته و در تلاشیم تا علاوه بر افزایش آسودگی خاطر مدیران کاروانها و حفظ شان و کرامت زائران حضرت رضا (ع)، روح خود را به غبار قدوم ایشان جلا بخشیم.</p>
+
+{% if request.session.setting.phone %}
+<div>
+  شماره تلفن : <p>{{request.session.setting.phone}}</p>
+</div>
+
+{% else %}
+<div>شماره تلفن :<p>051-37289000</p></div>
+{% endif %}
+
+</div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <h6 class="footer-title mb-4">صفحات</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <a class="footer-link" href="{% url "login" %}">ورود </a>
+                        </li>
+                        <li class="mb-3">
+                            <a class="footer-link" href="{% url "register" %}">ثبت نام </a>
+                        </li>
+                        <li class="mb-3">
+                            <a class="footer-link" href="{% url "about_us" %}">درباره ما </a>
+                        </li>
+                        <li class="mb-3">
+                            <a class="footer-link" href="{% url "contact_us" %}">تماس با ما</a>
+                        </li>
+                        <li class="mb-3">
+                            <a class="footer-link" href="{% url "faq" %}">سوالات پرتکرار</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom py-3">
+        <div class="container d-flex flex-wrap justify-content-between flex-md-row flex-column text-center text-md-start">
+            <div class="mb-2 mb-md-0">
+                <span class="footer-text">©
+                    <script>
+                        document.write(new Date().getFullYear());
+                    </script>
+                </span>
+                <span class="footer-text">
+                    تمامی حقوق مادی و معنوی این سایت متعلق به {% if request.session.setting.name != None %} {{request.session.setting.name}} {% else %} بیمه زائر {% endif %} می باشد
+                </span>
+            </div>
+            {% comment %} <div>
+                <a class="footer-link me-3" href="#support" target="_blank">
+                    <img alt="نماد github" data-app-dark-img="front-pages/icons/github-dark.png" data-app-light-img="front-pages/icons/github-light.png" src="{% static 'img/front-pages/icons/github-light.png' %}"/>
+                </a>
+                <a class="footer-link me-3" href="#support" target="_blank">
+                    <img alt="نماد فیس بوک" data-app-dark-img="front-pages/icons/facebook-dark.png" data-app-light-img="front-pages/icons/facebook-light.png" src="{% static 'img/front-pages/icons/facebook-light.png' %}"/>
+                </a>
+                <a class="footer-link me-3" href="#support" target="_blank">
+                    <img alt="نماد توییتر" data-app-dark-img="front-pages/icons/twitter-dark.png" data-app-light-img="front-pages/icons/twitter-light.png" src="{% static 'img/front-pages/icons/twitter-light.png' %}"/>
+                </a>
+                <a class="footer-link" href="#support" target="_blank">
+                    <img alt="آیکون گوگل" data-app-dark-img="front-pages/icons/instagram-dark.png" data-app-light-img="front-pages/icons/instagram-light.png" src="{% static 'img/front-pages/icons/instagram-light.png' %}"/>
+                </a>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</footer>
+<!-- Footer: End -->
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="{% static 'vendor/libs/popper/popper.js' %}"></script>
+<script src="{% static 'vendor/js/bootstrap.js' %}"></script>
+<script src="{% static 'vendor/libs/node-waves/node-waves.js' %}"></script>
+<!-- endbuild -->
+<!-- Vendors JS -->
+<script src="{% static 'vendor/libs/nouislider/nouislider.js' %}"></script>
+<script src="{% static 'vendor/libs/swiper/swiper.js' %}"></script>
+<!-- Main JS -->
+<script src="{% static 'js/front-main.js' %}"></script>
+<!-- Page JS -->
+<script src="{% static 'js/front-page-landing.js' %}"></script>
+</body>
+
+</html>

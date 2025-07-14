@@ -1,0 +1,58 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- Sections:Start -->
+<div class="scrollspy-example" data-bs-spy="scroll">
+    <section class="section-py bg-body landing-pricing" id="landingPricing">
+        <!-- banner.html -->
+        <div class="position-relative text-center text-white">
+            <img src="{% static 'img/banner.jpg' %}" class="img-fluid w-100" alt="بنر سایت">
+
+            <div class="position-absolute top-50 start-50 translate-middle">
+                <h2 class="mb-3 img-title">برای خرید بیمه نامه زائران ثبت نام کنید</h2>
+                <!-- <p class="mb-4">با تخفیف‌های ویژه ما همراه باشید</p> -->
+                <a href="{% url 'login' %}" class="btn btn-primary me-2">ورود</a>
+                <a href="{% url 'register' %}" class="btn btn-primary me-2">ثبت نام</a>
+            </div>
+        </div>
+
+    </section>
+    <!-- Pricing plans: End -->
+    <!-- Fun facts: Start -->
+    <section class="section-py landing-fun-facts" id="landingFunFacts">
+        <div class="container ">
+            <h2 class="text-center mb-5">مراحل دریافت بیمه‌نامه زائرین</h2>
+            <div class="d-flex flex-wrap justify-content-between">
+
+                <div class="roadmap-step col-md">
+                    <div class="step-icon">🧑‍💻</div>
+                    <div>ورود و ثبت‌نام</div>
+                </div>
+
+                <div class="roadmap-step col-md">
+                    <div class="step-icon">👨‍👩‍👧</div>
+                    <div>حذف یا اضافه همراهان</div>
+                </div>
+
+                <div class="roadmap-step col-md">
+                    <div class="step-icon">📝</div>
+                    <div>ثبت اطلاعات</div>
+                </div>
+
+                <div class="roadmap-step col-md">
+                    <div class="step-icon">💳</div>
+                    <div>پرداخت</div>
+                </div>
+
+                <div class="roadmap-step col-md">
+                    <div class="step-icon">🕋</div>
+                    <div>حرکت به‌سوی مقصد زیارتی</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- / Sections:End -->
+{% endblock content %}

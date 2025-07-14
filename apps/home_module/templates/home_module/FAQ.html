@@ -1,0 +1,114 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+
+                    <div class="row mt-4">
+                        <!-- Navigation -->
+                        <div class="col-lg-3 col-md-4 col-12 mb-md-0 mb-3">
+                            <div class="d-flex justify-content-between flex-column mb-2 mb-md-0">
+                                <ul class="nav nav-align-left nav-pills flex-column" role="tablist">
+                                    {% for category in categories %}
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link {% if forloop.first %}active{% endif %}" data-bs-target="#{{category.url_title}}" data-bs-toggle="tab" aria-selected="true" role="tab">
+                                            <i class="ti ti-credit-card me-1 ti-sm"></i>
+                                            <span class="align-middle fw-medium">{{category.title}}</span>
+                                        </button>
+                                    </li>
+                                    {% endfor %}
+                                    
+                                </ul>
+                                <div class="d-none d-md-block">
+                                    <div class="mt-4">
+                                        <img alt="پرسش و پاسخ تصویر" class="img-fluid" src="{%static 'img/illustrations/girl-sitting-with-laptop.png' %}" width="270">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Navigation -->
+                        <!-- FAQ's -->
+                        <div class="col-lg-9 col-md-8 col-12">
+                            <div class="tab-content py-0">
+                                {% for category in categories %}
+                                <div class="tab-pane fade  {% if forloop.first %}active show{% endif %} " id="{{category.url_title}}" role="tabpanel">
+                                    <div class="d-flex mb-3 gap-3">
+                                        <div class="mt-auto mb-auto">
+                                            <span class="badge bg-label-primary rounded-2 p-2">
+                                                <i class="ti ti-credit-card ti-lg"></i>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-2">
+                                                <span class="align-middle fw-semibold">سوالات {{category.title}}</span>
+                                            </h5>
+                                            <small>سوالات متداول در مورد {{category.title}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="accordion" id="accordion{{category.url_title}}">
+                                        {% for q in category.questions.all %}
+                                        <div class="card accordion-item {% if forloop.first %}active{% endif %}">
+                                            <h2 class="accordion-header">
+                                                <button aria-controls="accordion{{category.url_title}}-{{forloop.counter}}" class="accordion-button collapsed" data-bs-target="#accordion{{category.url_title}}-{{forloop.counter}}" data-bs-toggle="collapse" type="button">{{q.question}}</button>
+                                            </h2>
+                                            <div class="accordion-collapse collapse" id="accordion{{category.url_title}}-{{forloop.counter}}">
+                                                <div class="accordion-body"> {{q.response}}</div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!-- /FAQ's -->
+                    </div>
+                    <!-- Contact -->
+                     {% if contact %}
+                    <div class="row mt-5">
+                        <div class="col-12 text-center mb-4">
+                            <div class="badge bg-label-primary">پشتیبانی بیشتر</div>
+                            <h4 class="my-2">هنوز سوالی داری؟</h4>
+                            <p>اگر نمی توانید سوالی را در سوالات متداول ما پیدا کنید، می توانید با ما تماس بگیرید. ما به زودی به شما پاسخ خواهیم داد!</p>
+                        </div>
+                    </div>
+                    <div class="row text-center justify-content-center gap-sm-0 gap-3">
+                        {% if contact.phone %}
+                        <div class="col-sm-6">
+                            <div class="py-3 rounded bg-faq-section text-center">
+                                <span class="badge bg-label-primary my-3 rounded-2 p-2">
+                                    <i class="ti ti-phone ti-md"></i>
+                                </span>
+                                <h4 class="mb-2">
+                                    <a class="text-body" href="">
+                                        <bdi>{{contact.phone}}</bdi>
+                                    </a>
+                                </h4>
+                                <p>ارتباط تلفنی با کارشناسان ما</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if contact.email %}
+                        <div class="col-sm-6">
+                            <div class="py-3 rounded bg-faq-section text-center">
+                                <span class="badge bg-label-primary my-3 rounded-2 p-2">
+                                    <i class="ti ti-mail ti-md"></i>
+                                </span>
+                                <h4 class="mb-2">
+                                    <a class="text-body" href="mailto:help@help.com">help@mysite.com</a>
+                                </h4>
+                                <p>ارسال ایمیل و تیکتینگ</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    <!-- /Contact -->
+                </div>
+
+
+
+
+{% endblock content %}

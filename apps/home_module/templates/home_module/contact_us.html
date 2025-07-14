@@ -1,0 +1,119 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block content %}
+
+
+<section class="section-py bg-body landing-contact" id="landingContact">
+        <div class="container">
+            <div class="text-center mb-3 pb-1">
+                <span class="badge bg-label-primary">ارتباط با ما</span>
+            </div>
+            <h3 class="text-center mb-3 fw-medium">
+                <span class="section-title">ارتباط مستقیم با تیم ما</span>
+            </h3>
+            <p class="text-center mb-4 mb-lg-5 pb-md-3">هر سوال یا نکته ای؟ فقط برای ما این پایین بنویس</p>
+            <div class="row gy-4">
+                <div class="col-lg-5">
+                    <div class="contact-img-box position-relative border p-2 h-100">
+                        <img alt="contact-us" class="contact-img w-100 scaleX-n1-rtl" src="{% static 'img/front-pages/landing-page/contact-customer-service.png'%}">
+                        <div class="pt-3 px-4 pb-1">
+                            <div class="row gy-3 gx-md-4">
+                                {% if request.session.setting.email != None %}
+                                <div class="col-md-6 col-lg-12 col-xl-6">
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge bg-label-primary rounded p-2-5 me-2">
+                                            <i class="ti ti-mail ti-sm"></i>
+                                        </div>
+                                        <div>
+                                            <p class="mb-1">ایمیل</p>
+                                            <h5 class="mb-0">
+                                                <a class="text-heading" href="mailto:{{request.session.setting.email}}">{{request.session.setting.email}}</a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if request.session.setting.email != None %}
+                                <div class="col-md-6 col-lg-12 col-xl-6">
+                                    <div class="d-flex align-items-center">
+                                        <div class="badge bg-label-success rounded p-2-5 me-2">
+                                            <i class="ti ti-phone-call ti-sm"></i>
+                                        </div>
+                                        <div>
+                                            <p class="mb-1">تلفن</p>
+                                            <h5 class="mb-0">
+                                                <a class="text-heading" href="tel:{{request.session.setting.phone}}">
+                                                    <bdi>{{request.session.setting.phone}}</bdi>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="mb-2">ارتباط با ما</h4>
+                            <p class="mb-4"> اگر صحبتی با ما دارید لطفا در باکس زیر بنویسید مثل انتقادات و پیشنهادات ، همکاری،
+                                <br class="d-none d-lg-block">
+                                شراکت، و ... ما در خدمت شما هستیم.
+                            </p>
+                            <div class='container text-center'>
+                    {% if form.errors %}
+                    <ul>
+                    
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <li class='alert alert-danger'>
+                        <p>{{field.label}} - {{error}}</p>
+                        </li>
+                    {% endfor %}
+                    {% endfor %}
+                        
+                    
+                        
+                    </ul>
+                    {% endif %}
+                    </div>
+                            <form action='' method='POST'>
+                                {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="contact-form-fullname">{{form.full_name.label}}</label>
+                                        {{form.full_name}}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="contact-form-email">{{form.phone.label}}</label>
+                                        {{form.phone}}
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label" for="contact-form-message">{{form.massage.label}}</label>
+                                        {{form.message}}
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary waves-effect waves-light" type="submit">ارسال پیام</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% if messages %}
+                    {% for message in messages %}
+                    
+                    
+                    <script>
+                        Swal.fire({title: "{{message}}!",icon: "success",draggable: false,});
+                         
+                        </script>
+                        {% endfor %}
+                    {% endif %}
+{% endblock %}

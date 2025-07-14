@@ -1,0 +1,39 @@
+{% extends "layout/layout.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="container mt-5" dir="rtl">
+  <div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+      <h2 class="fw-bold">درباره ما</h2>
+      {% if about %}
+      <p class="text-muted mt-3">{{about}}</p>
+      {% endif %}
+      
+    </div>
+  </div>
+
+  {% if gallery %}
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <h4 class="fw-semibold">گالری تصاویر</h4>
+      <p class="text-muted">برخی از لحظات و پروژه‌های ما</p>
+    </div>
+
+    <div class="row g-3 mt-3 justify-content-center mb-3" >
+      {% comment %} Replace with your own image paths {% endcomment %}
+      {% for image in gallery %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card shadow-sm border-0">
+            <a href="{{image.image.url}}" target='_blank' data-lightbox='Gallery' data-title =''>
+          <img src="{{image.image.url}}" class="card-img-top" alt="گالری">
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'layout/layout_auth.html' %}
+
+{% block page_title %}
+    ثبت نام
+{% endblock  %}
+    
+
+{% block container %}
+                    <!-- /Logo -->
+                    <h4 class="mb-1 pt-2">ثبت نام کنید 🚀</h4>
+                    {% comment %} <p class="mb-4">مدیریت برنامه خود را اسان و سرگرم کننده کنید!</p> {% endcomment %}
+                    <form action="" class="mb-3" id="formAuthentication" method="POST">
+                    {% csrf_token %}
+
+                    <div class='container text-center'>
+                    {% if form.errors %}
+                    <ul>
+                    
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <li class='alert alert-danger'>
+                        <p>{{field.label}} - {{error}}</p>
+                        </li>
+                    {% endfor %}
+                    {% endfor %}
+                        
+                    
+                        
+                    </ul>
+                    {% endif %}
+                    </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">{{form.full_name.label}}</label>
+                            {{form.full_name}}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">{{form.national_code.label}}</label>
+                            {{form.national_code}}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">{{form.phone.label}}</label>
+                            {{form.phone}}
+                        </div>
+
+
+                        <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="password">{{form.password.label}}</label>
+                            <div class="input-group input-group-merge">
+                                {{form.password}}
+                                <span class="input-group-text cursor-pointer">
+                                    <i class="ti ti-eye-off"></i>
+                                </span>
+                            </div>
+                        </div>
+
+
+
+                         <div class="mb-3">
+                            <label class="form-label">{{form.confirm_password.label}}</label>
+                            <div class="input-group input-group-merge">
+                                {{form.confirm_password}}
+                                <span class="input-group-text cursor-pointer">
+                                    <i class="ti ti-eye-off"></i>
+                                </span>
+                            </div> 
+                        </div>
+                        {% comment %} <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" id="terms-conditions" name="terms" type="checkbox"/>
+                                <label class="form-check-label" for="terms-conditions"> من با سیاست
+                                    <a href="javascript:void(0);">حفظ حریم خصوصی و شرایط</a>
+                                    موافقت می کنم
+                                </label>
+                            </div>
+                        </div> {% endcomment %}
+                        <button type="submit" class="btn btn-primary d-grid w-100">ثبت نام</button>
+                    </form>
+                    <p class="text-center">
+                        <span>در حال حاضر یک حساب کاربری دارید؟</span>
+                        <a href="{% url "login" %}">
+                            <span>وارد شوید</span>
+                        </a>
+                    </p>
+                    {% comment %} <div class="divider my-4">
+                        <div class="divider-text">یا</div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-icon btn-label-facebook me-3" href="javascript:">
+                            <i class="tf-icons fa-brands fa-facebook-f fs-5"></i>
+                        </a>
+                        <a class="btn btn-icon btn-label-google-plus me-3" href="javascript:">
+                            <i class="tf-icons fa-brands fa-google fs-5"></i>
+                        </a>
+                        <a class="btn btn-icon btn-label-twitter" href="javascript:">
+                            <i class="tf-icons fa-brands fa-twitter fs-5"></i>
+                        </a>
+                    </div> {% endcomment %}
+                    
+
+                    
+                        
+{% endblock %}

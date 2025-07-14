@@ -1,0 +1,248 @@
+{% extends layout_path %}
+
+{% load jalali_tags %}
+
+{% load i18n %}
+
+{% block title %}درخواست بیمه جدید{% endblock title %}
+
+{% block page_css %}
+<!-- CSS -->
+<link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet"> <!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+{% endblock page_css %}
+
+
+
+{% block content %}
+
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="py-3 mb-4">
+            ایجاد درخواست بیمه جدید
+        </h4>
+        <!-- Basic Layout -->
+        <div class="row">
+            <div class="col-xl">
+                <div class="card mb-4">
+                    {% if form.errors %}
+                    <ul>
+
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li class='alert alert-danger'>
+                            <p>{{field.label}} - {{error}}</p>
+                        </li>
+                        {% endfor %}
+                        {% endfor %}
+
+
+
+                    </ul>
+                    {% endif %}
+                    {% comment %} <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">لایه پایه</h5>
+                        <small class="text-muted float-end">برچسب پیش فرض</small>
+                    </div> {% endcomment %}
+                    <div class="card-body">
+                        <form action="" method='POST'>
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <p class='text-danger d-inline'>*</p>
+                                <label class="form-label"
+                                    for="basic-default-fullname">{{form.destination.label}}</label>
+                                {{form.destination}}
+                            </div>
+                            {% if subs.count > 0 %}
+                            <div class="mb-3">
+                                <p class="alert alert-success ">برای مشاهده زائران <a class="text-link" onclick='show_subs()'  href="#">کلیک</a>
+                                    کنید</p>
+                            </div>
+
+                            {% else %}
+
+                            <div class="mb-3">
+                                <p class="alert alert-danger ">زائری برای این سفر یافت نشد</p>
+                            </div>
+                            <br>
+                            <div class="mb-3">
+                                <p class="alert alert-success ">برای ایجاد زائر <a target='_blank' href="{% url "create_sub" %}">کلیک </a>کنید</p>
+                            </div>
+
+                            {% endif %}
+
+                            <hr>
+
+                            <div class="mb-3">
+                                <label class="form-label"
+                                    for="basic-default-fullname">{{form.insurance_maneger.label}}</label>
+                                {{form.insurance_maneger}}
+                            </div>
+
+                            <div class="mb-3">
+                                <p class='text-danger d-inline'>*</p>
+                                <label class="form-label" for="basic-default-fullname">{{form.province.label}}</label>
+                                {{form.province}}
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-fullname">{{form.county.label}}</label>
+                                {{form.county}}
+                            </div>
+
+
+                            <hr>
+                            <div class="mb-3 text-center">
+                                <p class="alert alert-info">بعد از ثبت تاریخ شروع روی دکمه ثبت تاریخ کلیک کنید تا
+                                    بتوانید تاریخ بازگشت رو مشخص کنید</p>
+                                <p class="alert alert-info">توجه داشته باشید تاریخ شروع حرکت باید یک روز بعد از روز جاری
+                                    باشه و نهایتا تاریخ بازگشت تا 14 روز بعد</p>
+                                <p class='text-danger d-inline'>*</p>
+                                <label class="form-label">تاریخ شروع حرکت</label>
+                                {{form.start_date}}
+
+                                <button type="button" class="btn btn-success" onclick='end_date_open()'>ثبت
+                                    تاریخ</button>
+                            </div>
+
+
+                            <div class="mb-3 text-center">
+                                <p class='text-danger d-inline'>*</p>
+                                <label class="form-label">تاریخ پایان</label>
+                                {{form.end_date}}
+                            </div>
+
+
+                    </div>
+                    <button class="btn btn-primary" type="submit">ایجاد</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function show_subs(){
+    Swal.fire({
+  imageHeight: 1500,
+  html:'{% for sub in subs %} <p> {{forloop.counter}} - {{sub.full_name}} </p> {% endfor %}',
+  imageAlt: "A tall image"
+});
+    }
+</script>
+
+
+{% endblock %}
+
+{% block page_js %}
+
+<script src="{% static 'js/jalali.js' %}"></script>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+
+    const currentDate = new Date();
+    const tomorrow = new Date(currentDate)
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    // const max = new Date(currentDate);
+    // max.setDate(max.getDate() + 15);
+
+
+    // start date
+    document.getElementById("id_start_date").setAttribute("data-jdp-min-date", new Intl.DateTimeFormat('fa-IR', { useGrouping: false, numberingSystem: 'latn', year: "numeric", month: "2-digit", day: "2-digit" }).format(tomorrow));
+
+    // document.getElementById("id_start_date").setAttribute("data-jdp-max-date", new Intl.DateTimeFormat('fa-IR', { useGrouping: false, numberingSystem: 'latn', year: "numeric", month: "2-digit", day: "2-digit" }).format(max));
+
+    // end date 
+
+    function end_date_open() {
+
+        let input = document.getElementById('id_start_date').value;
+
+        if (input != "") {
+
+            document.getElementById('id_end_date').value = "";
+
+            document.getElementById('id_end_date').className = "d-block";
+
+
+
+            let persian_date = input.split("/");
+
+
+            let start_date = jalaali.toGregorian(Number(persian_date[0]), Number(persian_date[1]), Number(persian_date[2]));
+
+            let miladi = new Date(`${start_date['gy']}-${start_date['gm']}-${start_date['gd']}`);
+            miladi.setDate(miladi.getDate() + 1);
+
+            max_date = new Date(`${start_date['gy']}-${start_date['gm']}-${start_date['gd']}`);
+            max_date.setDate(max_date.getDate() + 14);
+
+
+
+            document.getElementById("id_end_date").setAttribute("data-jdp-min-date", new Intl.DateTimeFormat('fa-IR', { useGrouping: false, numberingSystem: 'latn', year: "numeric", month: "2-digit", day: "2-digit" }).format(miladi));
+
+            document.getElementById("id_end_date").setAttribute("data-jdp-max-date", new Intl.DateTimeFormat('fa-IR', { useGrouping: false, numberingSystem: 'latn', year: "numeric", month: "2-digit", day: "2-digit" }).format(max_date));
+            document.getElementById("id_end_date").setAttribute("class", 'text-center');
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+    $('#id_province').change(function () {
+        var provinceId = $(this).val();
+        $.ajax({
+            url: '/insurance/get_counties/',
+            data: {
+                'province_id': provinceId
+            },
+            success: function (data) {
+                let $county = $('#id_county');
+                $county.empty();  // پاک کردن مقادیر قبلی
+                $county.append('<option value="">انتخاب شهرستان</option>');
+                $.each(data, function (index, item) {
+                    $county.append($('<option>', {
+                        value: item.id,
+                        text: item.name
+                    }));
+                });
+            }
+        });
+    });
+</script>
+
+
+<script> function selectAll() { const select = document.getElementById('product-select').tomselect; select.setValue([...select.options].map(opt => opt.value)); } function clearAll() { const select = document.getElementById('product-select').tomselect; select.clear(); } </script>
+
+
+
+<script>
+    new TomSelect("#product-select", { plugins: ['remove_button'], persist: false, create: false, maxItems: null, render: { option_create: function (data, escape) { return '<div class="create">ایجاد "' + escape(data.input) + '"</div>'; } }, placeholder: "زائر موردنظر را انتخاب کنید...", allowEmptyOption: true, sortField: { field: "text", direction: "asc" } }); 
+</script>
+
+
+
+
+
+{% endblock page_js %}

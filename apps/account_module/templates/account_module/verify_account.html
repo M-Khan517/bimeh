@@ -1,0 +1,121 @@
+{% extends "layout/layout_auth.html" %}
+
+{% load i18n %}
+{% block page_title %}
+تایید حساب
+{% endblock page_title %}
+
+{% block container %}
+
+
+
+<h4 class="mb-1 pt-2">تایید دو مرحله ای 💬</h4>
+<p class="text-start mb-4"> ما یک کد تأیید به تلفن همراه شما ارسال کردیم. کد تایید ارسال شده را در فیلد زیر تایپ کنید.
+    <span class="fw-medium d-block mt-2">
+        <bdi>{{phone_first}}***{{phone_last}}</bdi>
+    </span>
+</p>
+<p class="mb-0 fw-medium">کد امنیتی 6 رقمی</p>
+<form action="" id="twoStepsForm" method="POST" class='fv-plugins-bootstrap5 fv-plugins-framework'
+    novalidate='novalidate'>
+    {% csrf_token %}
+    <div class="mb-3">
+        <div class="auth-input-wrapper d-flex align-items-center justify-content-sm-between numeral-mask-wrapper ltr">
+            {{form.num1}}
+            {{form.num2}}
+            {{form.num3}}
+            {{form.num4}}
+            {{form.num5}}
+            {{form.num6}}
+        </div>
+        <!-- Create a hidden field which is combined by 3 fields above -->
+        <input name="otp" type="hidden" />
+        <p>لطفاً تا <span id="timer" class="fw-bold">2:00</span> صبر کنید.</p>
+    </div>
+    <button class="btn btn-primary d-grid w-100 mb-3">تایید حساب کاربری</button>
+    <div id="resend" class="text-center" style='display:none'> کد را دریافت نکردید؟
+        <a id='resendBtn' href='' onclick="resend()"> ارسال مجدد</a>
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+<script>
+    function nextInput(element) {
+        let input = document.getElementById(element.id).value;
+        if (input.length == 1) {
+            let get_id = parseInt(element.id[6], 10);
+            get_id = get_id + 1;
+            if (get_id <= 6) {
+                document.getElementById(`id_num${get_id}`).focus();
+            }
+        }
+
+    }
+
+
+</script>
+
+
+{% endblock container %}
+
+
+{% block page_js %}
+
+<script>
+    let seconds = "{{expire}}";
+
+    const count_down = document.getElementById('timer');
+    const resendBtn = document.getElementById('resendBtn');
+
+    function updateTimer() {
+        const now = Date.now();
+        const diff = Math.floor((seconds - now) / 1000);
+
+        if (diff > 0) {
+            count_down.textContent = `ارسال مجدد تا ${diff} ثانیه`;
+        } else {
+            count_down.textContent = 'زمان به پایان رسید';
+            document.getElementById('resend').style.display = 'inline-block';
+            resendBtn.style.display = 'inline-block';
+            clearInterval(timer);
+        }
+    }
+
+    const timer = setInterval(updateTimer, 1000);
+    updateTimer();
+
+
+</script>
+
+
+
+<script>
+    function resend() {
+        $.get("{% url 'resend' phone %}", function (data) {
+
+            if (data['status'] == 200) {
+                Swal.fire({ title: data['message'], icon: "success", draggable: false, }).then((result) => {
+                    window.location.reload();
+
+                })
+
+            }
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+{% endblock page_js %}
